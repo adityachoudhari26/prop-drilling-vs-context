@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# React Concepts: Prop Drilling vs Context API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Prop Drilling
 
-## Available Scripts
+Prop drilling is a technique in React where props are passed from one part of the tree to another by going through other parts that do not need the data, but help pass it around.
 
-In the project directory, you can run:
+Pros:
 
-### `npm start`
+1. **Simple to understand:** Great for small applications where state can be easily managed.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Cons:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. **Code complexity:** As application grows large, passing props down multiple levels becomes complex.
+2. **Maintenance:** Any small change in the structure might require significant code modifications.
 
-### `npm test`
+Example: Consider the initial code, where theme prop is passed from App to Header, then Navbar, and then UserIcon.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Context API
 
-### `npm run build`
+It provides a way to share values between components without having to explicitly pass a prop through every level of the tree. Context is designed to share data that can be considered "global".
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Pros:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Avoid prop drilling:** No need to pass props through intermediate levels.
+2. **Ease of use:** Easier to manage state in larger applications.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Cons:
 
-### `npm run eject`
+1. **Less optimized:** Re-renders might be more frequent as a context value can change components high up in the tree.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Example: The latter code uses ThemeContext to provide and consume the theme state. App, Header, Navbar, and UserIcon all just use useTheme() to access it.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Comparison
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+When comparing, prop drilling is perfectly fine for small components and applications where the levels aren't deeply nested. However, in a large application, this prop drilling becomes a pain point, which can be solved using Context API.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Prop drilling can lead to component complexity and can make code harder to maintain. Context API solves this problem by making data accessible at multiple levels without passing it through props.
 
-## Learn More
+However, avoid overuse of the Context API. Every Context consumer re-renders when the context value changes, which can lead to unnecessary rendering if components consume a context but don't need to use the data that changed.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Code Comparisons
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+In our earlier prop drilling example, we can notice theme being passed as a prop repeatedly from App to UserIcon.
