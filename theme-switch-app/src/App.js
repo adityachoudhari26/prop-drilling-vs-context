@@ -56,7 +56,7 @@
 
 //   return (
 //     <div className="p-8 min-h-screen">
-//       <TextExample />
+//       {/* <TextExample /> */}
 //       <Header theme={theme} />
 //       <button onClick={toggleTheme} className={`${theme === "dark" ? "bg-gray-700 text-white" : "bg-blue-500 text-white"} p-2 rounded`}>Toggle theme</button>
 //     </div>
@@ -69,7 +69,7 @@
 import React, { createContext, useState, useContext } from "react";
 import "tailwindcss/tailwind.css";
 
-export const ThemeContext = createContext();
+export const ThemeContext = createContext("light");
 
 function TextBox({ text, setText }) {
   return (
@@ -130,8 +130,8 @@ function App() {
     <ThemeContext.Provider value={theme}>
       {/* <TextExample /> */}
       <div className="p-8">
-        <button onClick={toggleTheme} className={`${theme === "dark" ? "bg-gray-700 text-white" : "bg-blue-500 text-white"} p-2 rounded`}>Toggle theme</button>
         <Header />
+        <button onClick={toggleTheme} className={`${theme === "dark" ? "bg-gray-700 text-white" : "bg-blue-500 text-white"} p-2 rounded`}>Toggle theme</button>
       </div>
     </ThemeContext.Provider>
   );
